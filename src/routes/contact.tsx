@@ -26,9 +26,9 @@ function Contact() {
     e.preventDefault();
     const d = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     const er: Record<string, string> = {};
-    if (!d.name?.trim()) er.name = "Please enter your name.";
-    if (!/^\S+@\S+\.\S+$/.test(d.email ?? "")) er.email = "Please enter a valid email.";
-    if ((d.message ?? "").trim().length < 10) er.message = "Tell us a bit more (10+ characters).";
+    if (!d["name"]?.trim()) er["name"] = "Please enter your name.";
+    if (!/^\S+@\S+\.\S+$/.test(d["email"] ?? "")) er["email"] = "Please enter a valid email.";
+    if ((d["message"] ?? "").trim().length < 10) er["message"] = "Tell us a bit more (10+ characters).";
     setErrors(er);
     if (Object.keys(er).length === 0) setDone(true);
   }
