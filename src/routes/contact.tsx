@@ -45,7 +45,7 @@ function Contact() {
           </div>
         ) : (
           <form onSubmit={submit} noValidate className="glass grid gap-5 rounded-3xl p-8 md:grid-cols-2">
-            {[["name", "Full name", "text"], ["email", "Email", "email"], ["company", "Company (optional)", "text"], ["phone", "Phone / WhatsApp (optional)", "tel"]].map(([n, l, t]) => (
+            {([["name", "Full name", "text"], ["email", "Email", "email"], ["company", "Company (optional)", "text"], ["phone", "Phone / WhatsApp (optional)", "tel"]] as const).map(([n, l, t]) => (
               <label key={n} className="space-y-2 text-sm">
                 <span>{l}</span>
                 <input name={n} type={t} className={field} aria-invalid={!!errors[n]} />
@@ -61,8 +61,8 @@ function Contact() {
             <label className="space-y-2 text-sm"><span>Preferred date (your timezone: {tz})</span>
               <input name="date" type="datetime-local" className={field} /></label>
             <label className="space-y-2 text-sm md:col-span-2"><span>Project requirements</span>
-              <textarea name="message" rows={5} className={field} aria-invalid={!!errors.message} />
-              {errors.message && <span className="text-destructive">{errors.message}</span>}</label>
+              <textarea name="message" rows={5} className={field} aria-invalid={!!errors["message"]} />
+              {errors["message"] && <span className="text-destructive">{errors["message"]}</span>}</label>
             <button className="rounded-full bg-brand py-3 font-semibold text-primary-foreground shadow-glow transition active:scale-95 md:col-span-2">Request consultation</button>
           </form>
         )}
