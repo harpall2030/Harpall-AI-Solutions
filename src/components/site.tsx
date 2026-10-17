@@ -84,7 +84,7 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current; if (!el) return;
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add("is-visible"); io.disconnect(); } }, { threshold: 0.12 });
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { el.classList.add("is-visible"); io.disconnect(); } }, { threshold: 0.12 });
     io.observe(el); return () => io.disconnect();
   }, []);
   return <div ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>;
@@ -126,7 +126,7 @@ export function NetworkCanvas() {
       ctx.clearRect(0, 0, w, h);
       for (const p of pts) { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > 1) p.vx *= -1; if (p.y < 0 || p.y > 1) p.vy *= -1; }
       for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-        const a = pts[i], b = pts[j]; const d = Math.hypot((a.x - b.x) * w, (a.y - b.y) * h);
+        const a = pts[i]!, b = pts[j]!; const d = Math.hypot((a.x - b.x) * w, (a.y - b.y) * h);
         if (d < 160 * devicePixelRatio) { ctx.globalAlpha = 1 - d / (160 * devicePixelRatio); ctx.strokeStyle = col; ctx.lineWidth = .6; ctx.beginPath(); ctx.moveTo(a.x * w, a.y * h); ctx.lineTo(b.x * w, b.y * h); ctx.stroke(); }
       }
       ctx.globalAlpha = 1;
@@ -166,7 +166,7 @@ export function WorkflowViz() {
     { x: 300, y: 160, l: "AI Agent" },
     { x: 540, y: 60, l: "CRM" }, { x: 540, y: 160, l: "Knowledge base" }, { x: 540, y: 260, l: "Analytics" },
   ];
-  const hub = nodes[3];
+  const hub = nodes[3]!;
   return (
     <svg viewBox="0 0 600 320" className="w-full" role="img" aria-label="Workflow: channels flow into an AI agent which updates business systems">
       {nodes.filter((n) => n !== hub).map((n, i) => (
