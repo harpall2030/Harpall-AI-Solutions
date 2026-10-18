@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Check, ArrowLeft } from "lucide-react";
 import { CTA } from "@/components/site";
 import { agents, money } from "@/data/site";
+import { useCurrency } from "@/lib/currency";
 
 export const Route = createFileRoute("/marketplace/$slug")({
   loader: ({ params }) => {
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/marketplace/$slug")({
 
 function Detail() {
   const a = Route.useLoaderData();
+  const { currency } = useCurrency();
   return (
     <div className="mx-auto max-w-5xl px-5 py-16">
       <Link to="/marketplace" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" /> Marketplace</Link>
@@ -43,8 +45,8 @@ function Detail() {
         </div>
         <aside className="glass h-fit rounded-2xl p-6">
           <p className="text-sm text-muted-foreground">Indicative price</p>
-          <p className="font-display text-3xl font-semibold text-gradient">{money(a.price, "INR")}</p>
-          <p className="text-sm text-muted-foreground">{a.unit ?? "one-time"} · ≈ {money(a.price, "USD")}</p>
+          <p className="font-display text-3xl font-semibold text-gradient">{money(a.price, currency)}</p>
+          <p className="text-sm text-muted-foreground">{a.unit ?? "one-time"} · ≈ {money(a.price, currency === "INR" ? "USD" : "INR")}</p>
           <div className="mt-6"><CTA to="/contact">Request this agent</CTA></div>
         </aside>
       </div>

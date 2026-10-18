@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Zap, ShieldCheck, Globe2, Clock } from "lucide-react";
 import { CTA, NetworkCanvas, Reveal, SectionHead, WorkflowViz } from "@/components/site";
 import { agents, faqs, levels, money, services } from "@/data/site";
+import { useCurrency } from "@/lib/currency";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { currency } = useCurrency();
   return (
     <>
       <section className="relative overflow-hidden px-5 pb-24 pt-24 md:pt-32">
