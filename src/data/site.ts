@@ -1,8 +1,15 @@
 export type Currency = "INR" | "USD";
-const USD_RATE = 1 / 83; // indicative display rate only
+const USD_RATE = 1 / 83; // indicative exchange rate
+// International markets are priced higher than the raw exchange conversion
+// to match local market rates (US/EU/etc.).
+const USD_MARKET_MULTIPLIER = 1.6;
 
 export function money(inr: number, c: Currency) {
-  if (c === "USD") return "$" + Math.round(inr * USD_RATE).toLocaleString("en-US");
+  if (c === "USD") {
+    const usd = inr * USD_RATE * USD_MARKET_MULTIPLIER;
+    const rounded = usd >= 100 ? Math.round(usd / 10) * 10 : Math.round(usd);
+    return "$" + rounded.toLocaleString("en-US");
+  }
   return "₹" + inr.toLocaleString("en-IN");
 }
 
