@@ -3,6 +3,8 @@ import { useState } from "react";
 import { PageHero, Reveal } from "@/components/site";
 import { agents, money } from "@/data/site";
 import { useCurrency } from "@/lib/currency";
+import { useWebMCP } from "use-webmcp-tool";
+import { runWebMCPTool } from "@/lib/webmcp-telemetry";
 import { CurrencyToggle } from "./pricing";
 
 export const Route = createFileRoute("/marketplace/")({
