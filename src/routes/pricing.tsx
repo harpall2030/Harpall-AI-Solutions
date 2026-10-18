@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { Check } from "lucide-react";
 import { CTA, PageHero, Reveal } from "@/components/site";
 import { models, money, type Currency } from "@/data/site";
+import { useCurrency } from "@/lib/currency";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -27,7 +27,7 @@ export function CurrencyToggle({ c, set }: { c: Currency; set: (c: Currency) => 
 }
 
 function Pricing() {
-  const [c, setC] = useState<Currency>("INR");
+  const { currency: c, setCurrency: setC } = useCurrency();
   return (
     <>
       <PageHero eyebrow="Pricing" title={<>Five ways to <span className="text-gradient">buy AI</span></>} sub="Pick the model that fits your stage. All prices are indicative draft prices, excluding taxes." />

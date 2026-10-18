@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero, Reveal } from "@/components/site";
-import { agents, money, type Currency } from "@/data/site";
+import { agents, money } from "@/data/site";
+import { useCurrency } from "@/lib/currency";
 import { CurrencyToggle } from "./pricing";
 
 export const Route = createFileRoute("/marketplace/")({
@@ -24,7 +25,8 @@ function Chips({ list, v, set }: { list: string[]; v: string; set: (s: string) =
 }
 
 function Market() {
-  const [cat, setCat] = useState("All"); const [mod, setMod] = useState("All"); const [c, setC] = useState<Currency>("INR");
+  const [cat, setCat] = useState("All"); const [mod, setMod] = useState("All");
+  const { currency: c, setCurrency: setC } = useCurrency();
   const list = agents.filter((a) => (cat === "All" || a.category === cat) && (mod === "All" || a.model === mod));
   return (
     <>
