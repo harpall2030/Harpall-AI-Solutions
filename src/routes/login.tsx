@@ -13,7 +13,7 @@ export const Route = createFileRoute("/login")({
     ],
   }),
   validateSearch: (s: Record<string, unknown>) => ({
-    next: oauthReturnPath(s.next),
+    next: oauthReturnPath(s["next"]),
   }),
   component: Login,
 });

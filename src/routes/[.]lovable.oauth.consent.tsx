@@ -2,11 +2,25 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
+// Typed wrapper over the beta supabase.auth.oauth namespace.
+type OAuthClient = { name?: string };
+type AuthorizationDetails = {
+  client?: OAuthClient;
+  redirect_url?: string;
+  redirect_to?: string;
+};
+type OAuthApi = {
+  getAuthorizationDetails: (id: string) => Promise<{ data: AuthorizationDetails | null; error: { message: string } | null }>;
+  approveAuthorization: (id: string) => Promise<{ data: AuthorizationDetails | null; error: { message: string } | null }>;
+  denyAuthorization: (id: string) => Promise<{ data: AuthorizationDetails | null; error: { message: string } | null }>;
+};
+const oauth = (supabase.auth as unknown as { oauth: OAuthApi }).oauth;
+
 export const Route = createFileRoute("/.lovable/oauth/consent")({
   // SSR has no localStorage session and would redirect signed-in users.
   ssr: false,
   validateSearch: (s: Record<string, unknown>) => ({
-    authorization_id: typeof s.authorization_id === "string" ? s.authorization_id : "",
+    authorization_id: typeof s["authorization_id"] === "string" ? s["authorization_id"] : "",
   }),
   beforeLoad: async ({ search, location }) => {
     if (!search.authorization_id) throw new Error("Missing authorization_id");
@@ -16,7 +30,7 @@ export const Route = createFileRoute("/.lovable/oauth/consent")({
   },
   loader: async ({ location }) => {
     const authorizationId = new URLSearchParams(location.search).get("authorization_id")!;
-    const { data, error } = await supabase.auth.oauth.getAuthorizationDetails(authorizationId);
+    const { data, error } = await oauth.getAuthorizationDetails(authorizationId);
     if (error) throw error;
     const immediate = data?.redirect_url ?? data?.redirect_to;
     if (immediate && !data?.client) throw redirect({ href: immediate });
@@ -42,8 +56,8 @@ function Consent() {
   async function decide(approve: boolean) {
     setBusy(true);
     const { data, error } = approve
-      ? await supabase.auth.oauth.approveAuthorization(authorization_id)
-      : await supabase.auth.oauth.denyAuthorization(authorization_id);
+      ? await oauth.approveAuthorization(authorization_id)
+      : await oauth.denyAuthorization(authorization_id);
     if (error) {
       setBusy(false);
       setError(error.message);
