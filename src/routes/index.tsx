@@ -55,7 +55,7 @@ function Home() {
                   <p className="text-sm text-muted-foreground">{l.desc}</p>
                 </div>
                 <p className="text-right font-display font-semibold" style={{ color: `var(--${l.color})` }}>
-                  {"recurring" in l ? "Recurring" : `${money(l.min, "INR")} – ${money(l.max, "INR")}${"plus" in l ? "+" : ""}${"monthly" in l ? "/mo" : ""}`}
+                  {"recurring" in l ? "Recurring" : `${money(l.min, currency)} – ${money(l.max, currency)}${"plus" in l ? "+" : ""}${"monthly" in l ? "/mo" : ""}`}
                 </p>
               </div>
             </Reveal>
@@ -73,7 +73,7 @@ function Home() {
                 <p className="text-xs text-accent">{a.model} · {a.category}</p>
                 <h3 className="mt-2 text-xl font-semibold">{a.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{a.desc}</p>
-                <p className="mt-5 font-display font-semibold">{money(a.price, "INR")} <span className="text-sm font-normal text-muted-foreground">{a.unit}</span></p>
+                <p className="mt-5 font-display font-semibold">{money(a.price, currency)} <span className="text-sm font-normal text-muted-foreground">{a.unit}</span></p>
               </Link>
             </Reveal>
           ))}
