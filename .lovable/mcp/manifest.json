@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "sdk_version": "3.1.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://hlomajpqzvbkbkkjpxmt.supabase.co/auth/v1",
+    "require_oauth_client_claim": true,
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "my-website-showcase",
+      "version": "0.1.0",
+      "title": "My Website Showcase"
+    },
+    "tools": [
+      {
+        "name": "list_agents",
+        "title": "List AI agents",
+        "description": "List the AI agent templates offered in the Harpall AI Solutions marketplace, optionally filtered by category or pricing model.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "category": {
+              "description": "Filter by category, e.g. Sales, Support, Research, Documents, Marketing, Operations.",
+              "type": "string"
+            },
+            "model": {
+              "description": "Filter by pricing model.",
+              "type": "string",
+              "enum": [
+                "Template",
+                "Premium",
+                "Subscription",
+                "Pay-per-use"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_agent",
+        "title": "Get agent details",
+        "description": "Get full details for one AI agent template by its slug, including capabilities, workflow and requirements.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Agent slug, e.g. lead-generation. Use list_agents to find slugs."
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_services",
+        "title": "List services and pricing levels",
+        "description": "List Harpall AI Solutions' services and the 7-level product ladder with indicative INR price ranges.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
