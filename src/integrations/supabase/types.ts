@@ -14,16 +14,224 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      enquiries: {
+        Row: {
+          budget: string | null
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          preferred_contact: string | null
+          preferred_date: string | null
+          service_interest: string | null
+          status: string
+        }
+        Insert: {
+          budget?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          preferred_contact?: string | null
+          preferred_date?: string | null
+          service_interest?: string | null
+          status?: string
+        }
+        Update: {
+          budget?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          preferred_contact?: string | null
+          preferred_date?: string | null
+          service_interest?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          case_study_md: string | null
+          category: string | null
+          client_name: string | null
+          gallery_urls: Json
+          id: string
+          is_featured: boolean
+          published_at: string | null
+          slug: string
+          tech_stack: Json
+          thumbnail_url: string | null
+          title: string
+        }
+        Insert: {
+          case_study_md?: string | null
+          category?: string | null
+          client_name?: string | null
+          gallery_urls?: Json
+          id?: string
+          is_featured?: boolean
+          published_at?: string | null
+          slug: string
+          tech_stack?: Json
+          thumbnail_url?: string | null
+          title: string
+        }
+        Update: {
+          case_study_md?: string | null
+          category?: string | null
+          client_name?: string | null
+          gallery_urls?: Json
+          id?: string
+          is_featured?: boolean
+          published_at?: string | null
+          slug?: string
+          tech_stack?: Json
+          thumbnail_url?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          content_md: string | null
+          created_at: string
+          display_order: number
+          excerpt: string | null
+          features: Json
+          icon: string | null
+          id: string
+          is_active: boolean
+          slug: string
+          title: string
+        }
+        Insert: {
+          content_md?: string | null
+          created_at?: string
+          display_order?: number
+          excerpt?: string | null
+          features?: Json
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          slug: string
+          title: string
+        }
+        Update: {
+          content_md?: string | null
+          created_at?: string
+          display_order?: number
+          excerpt?: string | null
+          features?: Json
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          slug?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      workflows: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          service_id: string | null
+          steps: Json
+          title: string
+          video_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          service_id?: string | null
+          steps?: Json
+          title: string
+          video_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          service_id?: string | null
+          steps?: Json
+          title?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflows_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "client" | "visitor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +358,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "client", "visitor"],
+    },
   },
 } as const
