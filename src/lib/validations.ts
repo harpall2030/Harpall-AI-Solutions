@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const opt = (max: number) =>
-  z.string().trim().max(max).optional().transform((v) => (v ? v : undefined));
+  z.string().trim().max(max).optional().transform((v) => (v ? v : null));
 
 export const enquirySchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(100),
