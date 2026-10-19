@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Zap, ShieldCheck, Globe2, Clock } from "lucide-react";
 import { CTA, NetworkCanvas, Reveal, SectionHead, WorkflowViz } from "@/components/site";
+import { CinematicHero } from "@/components/CinematicHero";
 import { agents, faqs, levels, money, services } from "@/data/site";
 import { useCurrency } from "@/lib/currency";
 
@@ -20,25 +21,10 @@ function Home() {
   const { currency } = useCurrency();
   return (
     <>
-      <section className="relative overflow-hidden px-5 pb-24 pt-24 md:pt-32">
+      <CinematicHero />
+      <section className="relative overflow-hidden px-5 pb-12 pt-4">
         <NetworkCanvas />
-        <div className="absolute inset-x-0 top-0 -z-10 h-[600px] bg-[radial-gradient(ellipse_at_top,var(--violet),transparent_60%)] opacity-25" />
-        <div className="mx-auto max-w-5xl text-center">
-          <p className="rise glass mx-auto mb-6 inline-flex rounded-full px-4 py-1.5 text-xs text-muted-foreground">Intelligent Automation. Real Business Impact.</p>
-          <h1 className="text-5xl font-semibold leading-[1.05] md:text-7xl">
-            <span className="rise block">Build Smarter.</span>
-            <span className="rise block" style={{ animationDelay: "120ms" }}>Automate Faster.</span>
-            <span className="rise block text-gradient" style={{ animationDelay: "240ms" }}>Scale Further.</span>
-          </h1>
-          <p className="rise mx-auto mt-7 max-w-2xl text-lg text-muted-foreground" style={{ animationDelay: "360ms" }}>
-            Harpall AI Solutions builds AI agents that answer customers, generate leads, research and analyse — so your team can focus on growth.
-          </p>
-          <div className="rise mt-9 flex flex-wrap justify-center gap-3" style={{ animationDelay: "480ms" }}>
-            <CTA to="/marketplace">Explore AI Solutions <ArrowRight className="h-4 w-4" /></CTA>
-            <CTA to="/contact" variant="ghost">Book a Consultation</CTA>
-          </div>
-        </div>
-        <Reveal className="glass mx-auto mt-20 max-w-4xl rounded-3xl p-6 md:p-10" delay={200}>
+        <Reveal className="glass mx-auto max-w-4xl rounded-3xl p-6 md:p-10" delay={200}>
           <WorkflowViz />
         </Reveal>
       </section>
