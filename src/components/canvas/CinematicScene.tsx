@@ -4,7 +4,7 @@ import { Float, Environment, Lightformer } from "@react-three/drei";
 function FloatingShape() {
   return (
     <Float speed={1.5} rotationIntensity={0.6} floatIntensity={0.8}>
-      <mesh position={[2.6, 0.2, -1]} scale={1.3}>
+      <mesh position={[2.8, 0.1, -1.5]} scale={1}>
         <torusKnotGeometry args={[1, 0.3, 160, 32]} />
         <meshStandardMaterial color="#2f6bff" metalness={0.75} roughness={0.18} />
       </mesh>
