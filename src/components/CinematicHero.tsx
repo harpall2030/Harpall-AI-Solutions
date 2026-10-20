@@ -1,15 +1,13 @@
-import { lazy, Suspense, useEffect, useRef } from "react";
-import { ClientOnly } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { CTA } from "@/components/site";
+import { VideoOptimized } from "@/components/VideoOptimized";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useLenis } from "@/hooks/useLenis";
+import aiCore from "@/assets/videos/ai-core.mp4.asset.json";
+import aiCorePoster from "@/assets/videos/ai-core-poster.jpg.asset.json";
 
-const CinematicScene = lazy(() => import("@/components/canvas/CinematicScene"));
-
-const Fallback = () => (
-  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--primary)_25%,transparent),transparent_65%)]" />
-);
+// The previous code-driven 3D scene remains available at @/components/canvas/CinematicScene.
 
 export function CinematicHero() {
   const reduced = usePrefersReducedMotion();
@@ -26,7 +24,7 @@ export function CinematicHero() {
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
       const ctx = gsap.context(() => {
-        gsap.from(contentRef.current, { y: 80, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.2 });
+        gsap.from(contentRef.current, { y: 60, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.2 });
         gsap.to(contentRef.current, { y: -100, opacity: 0.3, scrollTrigger: { trigger: heroRef.current, start: "top top", end: "bottom top", scrub: 1 } });
       }, heroRef);
       revert = () => ctx.revert();
@@ -37,12 +35,9 @@ export function CinematicHero() {
   return (
     <section ref={heroRef} className="relative flex h-[100svh] min-h-[600px] w-full items-center justify-center overflow-hidden bg-background">
       <div className="absolute inset-0">
-        <ClientOnly fallback={<Fallback />}>
-          {reduced ? <Fallback /> : (
-            <Suspense fallback={<Fallback />}><CinematicScene /></Suspense>
-          )}
-        </ClientOnly>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <VideoOptimized eager mp4Src={aiCore.url} poster={aiCorePoster.url} alt="Harpall AI core animation" className="h-full w-full object-cover object-center opacity-80" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--background)_70%,transparent)_0%,transparent_70%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/30" />
       </div>
       <div ref={contentRef} className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <p className="glass mx-auto mb-6 inline-flex rounded-full px-4 py-1.5 text-xs text-muted-foreground">Intelligent Automation. Real Business Impact.</p>
@@ -60,5 +55,3 @@ export function CinematicHero() {
     </section>
   );
 }
-// To use a background video later, swap <Fallback /> / scene for:
-// <VideoOptimized webmSrc="/videos/hero.webm" mp4Src="/videos/hero.mp4" poster="/videos/hero-poster.webp" alt="Harpall AI cinematic background" />
