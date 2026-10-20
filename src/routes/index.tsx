@@ -2,6 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Zap, ShieldCheck, Globe2, Clock } from "lucide-react";
 import { CTA, NetworkCanvas, Reveal, SectionHead, WorkflowViz } from "@/components/site";
 import { CinematicHero } from "@/components/CinematicHero";
+import { VideoOptimized } from "@/components/VideoOptimized";
+import networkVid from "@/assets/videos/intelligent-network.mp4.asset.json";
+import networkPoster from "@/assets/videos/intelligent-network-poster.jpg.asset.json";
+import workflowVid from "@/assets/videos/automation-workflow.mp4.asset.json";
+import workflowPoster from "@/assets/videos/automation-workflow-poster.jpg.asset.json";
+import convergenceVid from "@/assets/videos/convergence.mp4.asset.json";
+import convergencePoster from "@/assets/videos/convergence-poster.jpg.asset.json";
 import { agents, faqs, levels, money, services } from "@/data/site";
 import { useCurrency } from "@/lib/currency";
 
@@ -66,7 +73,11 @@ function Home() {
         </div>
       </section>
 
-      <section className="px-5 py-20">
+      <section className="relative overflow-hidden px-5 py-24">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <VideoOptimized mp4Src={networkVid.url} poster={networkPoster.url} alt="Connected AI network animation" className="h-full w-full object-cover opacity-35" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background" />
+        </div>
         <SectionHead eyebrow="Services" title="Everything you need to put AI to work" />
         <div className="mx-auto grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.slice(0, 6).map(([t, d], i) => (
@@ -78,10 +89,20 @@ function Home() {
 
       <section className="px-5 py-20">
         <SectionHead eyebrow="How it works" title="A simple, transparent process" />
-        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-4">
-          {["Discovery call", "Solution design", "Build & integrate", "Launch & improve"].map((s, i) => (
-            <Reveal key={s} delay={i * 80}><div className="glass rounded-2xl p-6"><p className="font-display text-4xl font-bold text-gradient">0{i + 1}</p><p className="mt-3 font-semibold">{s}</p></div></Reveal>
-          ))}
+        <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2">
+          <Reveal>
+            <figure className="glass overflow-hidden rounded-3xl">
+              <div className="aspect-video">
+                <VideoOptimized mp4Src={workflowVid.url} poster={workflowPoster.url} alt="Illustration of business operations connected by automation" />
+              </div>
+              <figcaption className="px-5 py-3 text-xs text-muted-foreground">Illustrative animation — not a live system.</figcaption>
+            </figure>
+          </Reveal>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {["Discovery call", "Solution design", "Build & integrate", "Launch & improve"].map((s, i) => (
+              <Reveal key={s} delay={i * 80}><div className="glass h-full rounded-2xl p-6"><p className="font-display text-4xl font-bold text-gradient">0{i + 1}</p><p className="mt-3 font-semibold">{s}</p></div></Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -107,10 +128,14 @@ function Home() {
       </section>
 
       <section className="px-5 py-16">
-        <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-brand p-12 text-center text-primary-foreground">
-          <h2 className="text-3xl font-semibold md:text-5xl">Ready to automate?</h2>
-          <p className="mx-auto mt-4 max-w-xl opacity-90">Tell us what slows your team down. We'll show you which AI agent fixes it.</p>
-          <Link to="/contact" className="mt-8 inline-flex rounded-full bg-background px-6 py-3 font-semibold text-foreground transition-transform hover:scale-105">Book a Consultation</Link>
+        <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-primary/30 p-12 text-center md:p-16">
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <VideoOptimized mp4Src={convergenceVid.url} poster={convergencePoster.url} alt="Systems converging through AI" className="h-full w-full object-cover opacity-60" />
+            <div className="absolute inset-0 bg-background/65" />
+          </div>
+          <h2 className="text-3xl font-semibold md:text-5xl">Ready to <span className="text-gradient">automate?</span></h2>
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">Tell us what slows your team down. We'll show you which AI agent fixes it.</p>
+          <div className="mt-8"><CTA to="/contact">Book a Consultation <ArrowRight className="h-4 w-4" /></CTA></div>
         </Reveal>
       </section>
     </>
