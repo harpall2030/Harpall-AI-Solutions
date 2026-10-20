@@ -42,7 +42,7 @@ export function CinematicHero() {
             <Suspense fallback={<Fallback />}><CinematicScene /></Suspense>
           )}
         </ClientOnly>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
       </div>
       <div ref={contentRef} className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <p className="glass mx-auto mb-6 inline-flex rounded-full px-4 py-1.5 text-xs text-muted-foreground">Intelligent Automation. Real Business Impact.</p>
